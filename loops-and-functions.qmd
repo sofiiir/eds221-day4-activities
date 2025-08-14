@@ -1,0 +1,70 @@
+---
+title: "loops-and-functions"
+format: html
+---
+
+```{r}
+#creating two vectors with data 
+ weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+transects <- c("Transect A", "Transect B", "Transect C")
+
+#creating a matrix to store the data 
+out_matrix <- matrix(nrow = length(weekdays), ncol = length(transects))
+
+for (i in seq_along(weekdays)){
+  for (j in seq_along(transects)){
+   k <- paste(weekdays[i], "-", transects[j]) #industry standard needs to store it in a variable
+    out_matrix[i,j] <- k #need to refer to [row, column]
+  }
+}
+
+```
+
+```{r}
+#function for F = ma where m = mass, a = acceleration, and F = force
+#inputs are from mass are in kg and from acceleration are in m/s^2
+force <- function(m, a){
+  f <- (m * a)
+  print(paste("The resulting force is", f, "Newton's."))
+}
+
+force(m = 8, a = 10)
+
+```
+
+```{r}
+#function for fish weight where w = weight, a & b = species variables, and L = length
+
+
+
+fish_parms <- data.frame(fish_common_name = c("Milkfish", "Great barracuda", "Giant trevally"),
+a_est = c(0.0905, 0.0181, 0.0353),
+b_est = c(2.52, 3.27, 3.05))
+
+fish_weight <- function(fish_name, tot_length){
+  fish_parms_species <- fish_parms |> dplyr::filter(fish_common_name == fish_name)
+  W <-  fish_parms_species$a_est * (tot_length^fish_parms_species$b_est)
+}
+
+
+length_vec <- seq(from = 0, to = 100, by = 1)
+
+print(fish_weight(fish_name = "Milkfish", tot_length = 5))
+
+milkfish_weight <- fish_weight(fish_name = "Milkfish", tot_length = length_vec)
+
+print(milkfish_weight)
+```
+
+
+```{r}
+#Wave power equation
+wave_power <- function (height, period){
+  P <- 0.5 * (height^2) * period
+}
+
+height_vec <- seq(from = 0, to = 3, by = 0.2)
+print(wave_power(height = height_vec, period = 8))
+
+```
+
